@@ -1,1 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
+/jenkins/jenkins_home/
+/jenkins/helm-v2.2.3-linux-amd64.tar.gz
+/jenkins/linux-amd64/

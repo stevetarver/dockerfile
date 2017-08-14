@@ -4,6 +4,7 @@
 #
 . 0.config.sh
 
+# This helm version must match the cluster's tiller version
 HELM_VERSION=2.2.3
 HELM_ARCHIVE_NAME="helm-v${HELM_VERSION}-linux-amd64.tar.gz"
 
