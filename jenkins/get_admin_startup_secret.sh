@@ -5,6 +5,6 @@
 #
 # This script simplifies fetching that secret
 #
-. 0.config.sh
+. config.sh
 
 docker exec -it -u root ${CONTAINER_NAME} cat /var/jenkins_home/secrets/initialAdminPassword

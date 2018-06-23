@@ -1,0 +1,17 @@
+---
+# lint this file from the this dir: docker-compose config
+version: '3'
+
+services:
+  jenkins:
+    container_name: local-${SERVICE_NAME}
+    image: ${DOCKER_IMAGE_NAMETAG}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${JENKINS_HOME}:/var/jenkins_home
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+
+
+# vim: ft=yaml

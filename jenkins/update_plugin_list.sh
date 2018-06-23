@@ -12,23 +12,31 @@
 # More details on plugin install strategy at
 #   https://github.com/jenkinsci/docker/blob/master/README.md
 #
-JENKINS_URL='localhost:8080'
+MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+(
+    cd ${MY_DIR}
+    . config.sh
 
-echo -n "Enter the Jenkins account name: "
-read USER
+    # Point to the proper jenkins to fetch the plugin list
+    JENKINS_URL='localhost:8080'
+    #JENKINS_URL='http://jenkins.t3dev.dom/'
 
-echo -n "Enter the Jenkins account password: "
-read -s PASSWORD
+    echo -n "Enter the Jenkins account name: "
+    read USER
 
-wget --user=${USER}                         \
-    --password=${PASSWORD}                  \
-    --auth-no-challenge                     \
-    --output-document=plugins-current.json  \
-    --quiet                                 \
-    "http://${JENKINS_URL}/pluginManager/api/json?depth=1&tree=plugins[shortName,version,active]"
+    echo -n "Enter the Jenkins account password: "
+    read -s PASSWORD
 
-# Create a file of newline delimited pluginID:version pairs
-#  credentials:1.18
-#  maven-plugin:2.7.1
+    wget --user=${USER}                         \
+        --password=${PASSWORD}                  \
+        --auth-no-challenge                     \
+        --output-document=plugins-current.json  \
+        --quiet                                 \
+        "http://${JENKINS_URL}/pluginManager/api/json?depth=1&tree=plugins[shortName,version,active]"
 
-jq -r '.plugins[] | select(.active) | "\(.shortName):\(.version)"' plugins-current.json > plugins-to-install.txt
+    # Create a file of newline delimited pluginID:version pairs
+    #  credentials:1.18
+    #  maven-plugin:2.7.1
+
+    jq -r '.plugins[] | select(.active) | "\(.shortName):\(.version)"' plugins-current.json | sort > files/plugins-to-install.txt
+)
