@@ -3,7 +3,6 @@
 # Stop running container and remove container/image and build artifacts
 #
 MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 (
     cd ${MY_DIR}
     . config.sh

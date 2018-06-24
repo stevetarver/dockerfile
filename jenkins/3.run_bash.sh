@@ -3,7 +3,6 @@
 # Run the container in bash mode
 #
 MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 (
     cd ${MY_DIR}
     . config.sh

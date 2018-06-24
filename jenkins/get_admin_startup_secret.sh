@@ -5,6 +5,10 @@
 #
 # This script simplifies fetching that secret
 #
-. config.sh
+MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+(
+    cd ${MY_DIR}
+    . config.sh
 
-docker exec -it -u root ${CONTAINER_NAME} cat /var/jenkins_home/secrets/initialAdminPassword
+    docker exec -it -u root ${CONTAINER_NAME} cat /var/jenkins_home/secrets/initialAdminPassword
+)
