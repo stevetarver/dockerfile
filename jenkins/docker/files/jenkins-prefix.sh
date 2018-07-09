@@ -1,9 +1,15 @@
 # stevetarver addition:
 # Insert at the top of /usr/local/bin/jenkins.sh
+
+# Dynamically set our k8s api server and service account token in kube.config
+sed -i "s/~~K8S_API_SERVER~~/https:\/\/${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT_HTTPS}/g" /etc/kubernetes/kube.config
+sed -i "s/~~TILLER_SA_TOKEN~~/$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)/" /etc/kubernetes/kube.config
+# Initialize helm with the in-cluster tiller
+helm init
+
 # Jenkins can run docker, but needs access to the docker mounted docker.sock
 # to talk to the host daemon, for image caching/reuse and so other agents have
 # access to the docker images we create.
-
 # Don't modify groups if docker.sock doesn't exist - allow bashing into the container
 if [[ -e /var/run/docker.sock ]]; then
     DOCKER_SOCK_GROUP=$(sudo stat -c "%G" /var/run/docker.sock)

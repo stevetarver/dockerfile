@@ -2,7 +2,7 @@
 # Image use: https://github.com/jenkinsci/docker/blob/master/README.md
 # Dockerfile: https://github.com/jenkinsci/docker/blob/master/Dockerfile
 # NOTE: we need to run the debian image because we are mounting /var/run
-FROM jenkins/jenkins:2.107.2
+FROM jenkins/jenkins:2.121.1
 
 # Build system will provide arguments to identify source location/version
 ARG GIT_REPO_NAME='NOT SPECIFIED'
@@ -23,10 +23,6 @@ COPY files/executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groov
 COPY files/plugins-to-install.txt /usr/share/jenkins/ref/plugins.txt
 COPY temp/docker/docker /usr/bin/docker
 COPY temp/linux-amd64/helm /usr/bin/helm
-
-# `helm init` must be run outside of main run command.
-# It produces an error trying to connect to tiller, will kill the run, but safe to ignore
-RUN helm init; exit 0
 
 # NOTES:
 # - sudo allows jenkins.sh to manipulate groups for access to docker.sock; see files/jenkins-prefix.sh
